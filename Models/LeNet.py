@@ -6,11 +6,12 @@ import torch.optim as optim
 
 print("Loading data...")
 # Load image data (32*32)
-training_data = np.load("../training_garbage_data_LeNet.npy", allow_pickle=True)
+training_data = np.load("../TrainingData/training_garbage_data_LeNet.npy", allow_pickle=True)
 print("Data is loaded.")
+print(training_data.shape)
 
 # LeNet
-class Net(nn.Module):
+class LeNet(nn.Module):
     def __init__(self):
         super().__init__()
         self.relu = nn.ReLU()
@@ -42,7 +43,7 @@ class Net(nn.Module):
             num_features *= s
         return num_features
 
-net = Net()
+net = LeNet()
 
 # Create an optimizer
 optimizer = optim.Adam(net.parameters(), lr=0.001)
@@ -53,7 +54,8 @@ loss_function = nn.MSELoss()
 # X: data
 # y: labels
 print("Start to extract data and labels...")
-X = torch.Tensor([i[0] for i in training_data]).view(-1, 32, 32)
+# X = torch.Tensor([i[0] for i in training_data]).view(-1, 32, 32)
+X = torch.Tensor([i[0] for i in training_data])
 X = X/255.0
 y = torch.Tensor([i[1] for i in training_data])
 print("Data and labels are extracted.")
