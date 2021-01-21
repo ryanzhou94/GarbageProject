@@ -8,30 +8,31 @@ print("Loading data...")
 # Load image data (32*32)
 training_data = np.load("../TrainingData/training_garbage_data_LeNet.npy", allow_pickle=True)
 print("Data is loaded.")
-print(training_data.shape)
 
-# LeNet
+# 参考借鉴
+# https://zh.d2l.ai/chapter_convolutional-neural-networks/lenet.html
 class LeNet(nn.Module):
     def __init__(self):
         super().__init__()
-        self.relu = nn.ReLU()
+        # 因为LeNet太过于精简，这里不采用Sequential的方式来实现LeNet
+        self.sigmoid = nn.Sigmoid()
         self.pool = nn.AvgPool2d(kernel_size=(2, 2), stride=(2, 2))
-        self.conv1 = nn.Conv2d(1, 6, 5)
-        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.conv1 = nn.Conv2d(1, 6, 5)     # 6个5*5的卷积核
+        self.conv2 = nn.Conv2d(6, 16, 5)    # 16个5*5的卷积核
 
-        # input feature vector: 16*5*5; output: 120
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        # input feature vector: 400 = 16*5*5; output: 120
+        self.fc1 = nn.Linear(400, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 6)
 
     def forward(self, x):
-        x = self.pool(self.relu((self.conv1(x))))
-        x = self.pool(self.relu((self.conv2(x))))
+        x = self.pool(self.sigmoid((self.conv1(x))))
+        x = self.pool(self.sigmoid((self.conv2(x))))
         # Flatten the feature vector
         x = x.view(-1, self.num_flat_feature(x))
-        x = self.relu(self.fc1(x))
-        x = self.relu(self.fc2(x))
-        x = self.fc3(x)
+        x = self.sigmoid(self.fc1(x)) # 400 -> 120
+        x = self.sigmoid(self.fc2(x)) # 120 -> 84
+        x = self.fc3(x)               # 84 -> 6
         return x
 
     # Flatten feature vectors from convolution layers to FC layers
