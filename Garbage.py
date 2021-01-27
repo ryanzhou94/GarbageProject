@@ -12,6 +12,7 @@ class Garbage():
     PLASTIC = "dataset-resized/plastic"
     TRASH = "dataset-resized/trash"
     LABELS = {CARDBOARD: 0, GLASS: 1, METAL: 2, PAPER: 3, PLASTIC: 4, TRASH: 5}
+
     def make_training_data_LeNet(self):
         image_size = 32
         training_data = []

@@ -6,7 +6,8 @@ import torch.optim as optim
 
 print("Loading data...")
 # Load image data (32*32)
-training_data = np.load("../TrainingData/training_garbage_data_LeNet.npy", allow_pickle=True)
+# training_data = np.load("../TrainingData/training_garbage_data_LeNet.npy", allow_pickle=True)
+training_data = np.load("../DogCatData/data_LeNet.npy", allow_pickle=True)
 print("Data is loaded.")
 
 # 参考借鉴
@@ -23,7 +24,8 @@ class LeNet(nn.Module):
         # input feature vector: 400 = 16*5*5; output: 120
         self.fc1 = nn.Linear(400, 120)
         self.fc2 = nn.Linear(120, 84)
-        self.fc3 = nn.Linear(84, 6)
+        # self.fc3 = nn.Linear(84, 6)
+        self.fc3 = nn.Linear(84, 2)
 
     def forward(self, x):
         x = self.pool(self.sigmoid((self.conv1(x))))

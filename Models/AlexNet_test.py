@@ -6,7 +6,8 @@ from tqdm import tqdm
 
 print("Loading data...")
 # Load image data (227*227*3)
-training_data = np.load("../TrainingData/training_garbage_data_AlexNet.npy", allow_pickle=True)
+# training_data = np.load("../TrainingData/training_garbage_data_AlexNet.npy", allow_pickle=True)
+training_data = np.load("../DogCatData/data_AlexNet.npy", allow_pickle=True)
 print("Data is loaded.")
 # training_data: 2527张图
 # 每张图有2个维度：图片和标签
